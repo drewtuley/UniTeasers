@@ -69,11 +69,10 @@ def ask_wikipedia(print_lock, source_numeric_animal, parsed_word_list):
             # if wikipedia gives us a redirect, pick up the new location and try that
             r = requests.head(r.headers['Location'])
         if r.status_code == 200:
-            print_lock.acquire()
-            print('{} = {} ({} out of {} choices {})'.format(source_numeric_animal, parsed_animal,
-                                                             ordinal_suffixed(str(index)),
-                                                             len(parsed_word_list), parsed_word_list))
-            print_lock.release()
+            with lock:
+                print('{:14} = {} ({} out of {} choices {})'.format(source_numeric_animal, parsed_animal,
+                                                                 ordinal_suffixed(str(index)),
+                                                                 len(parsed_word_list), parsed_word_list))
             break
         index += 1
 
