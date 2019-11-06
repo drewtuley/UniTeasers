@@ -1,6 +1,5 @@
 import threading
 
-
 import requests
 
 # Safari Animals
@@ -53,23 +52,36 @@ def parse(number_word):
     return parsed_list
 
 
-def ask_wikipedia(lock, animal, parsed_animal_list):
-    for parsed_animal in parsed_animal_list:
+suffixes = {'0': 'th', '1': 'st', '2': 'nd', '3': 'rd', '4': 'th', '5': 'th', '6': 'th', '7': 'th', '8': 'th',
+            '9': 'th'}
+
+
+def ordinal_suffixed(ordinal):
+    return str(ordinal) + suffixes[str(ordinal)[-1]]
+
+
+def ask_wikipedia(print_lock, source_numeric_animal, parsed_word_list):
+    index = 1
+    for parsed_animal in parsed_word_list:
         # ask Wikipedia if it knows what the animal is
         r = requests.head('https://en.wikipedia.org/wiki/' + parsed_animal)
         if r.status_code == 301:
             # if wikipedia gives us a redirect, pick up the new location and try that
             r = requests.head(r.headers['Location'])
         if r.status_code == 200:
-            lock.acquire()
-            print('{} = {} (out of {} choices)'.format(animal, parsed_animal, len(parsed_animal_list)))
-            lock.release()
+            print_lock.acquire()
+            print('{} = {} ({} out of {} choices {})'.format(source_numeric_animal, parsed_animal,
+                                                             ordinal_suffixed(str(index)),
+                                                             len(parsed_word_list), parsed_word_list))
+            print_lock.release()
             break
+        index += 1
 
 
-lock = threading.Lock()
-for animal in animals:
-    parsed_animal_list = parse(animal)
-    # print(parsed_animal_list)
-    find = threading.Thread(target=ask_wikipedia, args=(lock, animal, parsed_animal_list))
-    find.start()
+if __name__ == "__main__":
+    lock = threading.Lock()
+    for animal in animals:
+        parsed_animal_list = parse(animal)
+        # print(parsed_animal_list)
+        find = threading.Thread(target=ask_wikipedia, args=(lock, animal, parsed_animal_list))
+        find.start()
