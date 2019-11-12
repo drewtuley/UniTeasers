@@ -2,6 +2,14 @@ from itertools import permutations
 from requests import head
 
 
+# Using the letters AAEENNPPPPSS complete the grid below. The grid reads the same across as down.
+
+# S...
+# .A..
+# ..E.
+# ...T
+
+
 def test_words_on_wiktionary(words, valid_words):
     invalid_words = []
     print('Test words: ' + ','.join(words))
@@ -26,7 +34,13 @@ if __name__ == '__main__':
 
     invalid_word_cache = []
     valid_word_cache = []
+    # as the grid is a diagonally symmetric we only need half the letters
     for p in permutations(['a', 'e', 'n', 'p', 'p', 's']):
+        # form the 4 words using the following indices into 'p'
+        # S012
+        # 0A34
+        # 13E5
+        # 245T
         words_to_test = [
             's' + p[0] + p[1] + p[2],
             p[0] + 'a' + p[3] + p[4],
