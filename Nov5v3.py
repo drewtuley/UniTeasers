@@ -7,7 +7,7 @@ import requests
 # but the spaces between the resulting numbers have been removed.
 # e.g. DOG=4.15.7=4157
 
-animals = [
+numeric_animals = [
     '18891415',
     '3181531549125',
     '79181665',
@@ -49,7 +49,7 @@ def parse(number_word):
     parsed_list = []
     max_index = len(number_word)
     recursive_parse(number_word, parsed_word, current_index, max_index, parsed_list)
-    return parsed_list
+    return {animal for animal in parsed_list}
 
 
 suffixes = {'0': 'th', '1': 'st', '2': 'nd', '3': 'rd', '4': 'th', '5': 'th', '6': 'th', '7': 'th', '8': 'th',
@@ -60,27 +60,26 @@ def ordinal_suffixed(ordinal):
     return str(ordinal) + suffixes[str(ordinal)[-1]]
 
 
-def ask_wikipedia(print_lock, source_numeric_animal, parsed_word_list):
-    index = 1
-    for parsed_animal in parsed_word_list:
-        # ask Wikipedia if it knows what the animal is
-        r = requests.head('https://en.wikipedia.org/wiki/' + parsed_animal)
-        if r.status_code == 301:
-            # if wikipedia gives us a redirect, pick up the new location and try that
-            r = requests.head(r.headers['Location'])
-        if r.status_code == 200:
-            with lock:
-                print('{:14} = {} ({} out of {} choices {})'.format(source_numeric_animal, parsed_animal,
-                                                                 ordinal_suffixed(str(index)),
-                                                                 len(parsed_word_list), parsed_word_list))
-            break
-        index += 1
+def ask_wikipedia(print_lock, source_numeric_animal, parsed_animal, index, parsed_word_list):
+    # ask Wikipedia if it knows what the animal is
+    r = requests.head('https://en.wikipedia.org/wiki/' + parsed_animal)
+    if r.status_code == 301:
+        # if wikipedia gives us a redirect, pick up the new location and try that
+        r = requests.head(r.headers['Location'])
+    if r.status_code == 200:
+        with lock:
+            print('{:14} = {} ({} out of {} choices {})'.format(source_numeric_animal, parsed_animal,
+                                                                ordinal_suffixed(str(index)),
+                                                                len(parsed_word_list), parsed_word_list))
 
 
 if __name__ == "__main__":
     lock = threading.Lock()
-    for animal in animals:
-        parsed_animal_list = parse(animal)
+    for numeric_animal in numeric_animals:
+        parsed_animal_list = parse(numeric_animal)
         # print(parsed_animal_list)
-        find = threading.Thread(target=ask_wikipedia, args=(lock, animal, parsed_animal_list))
-        find.start()
+        index = 1
+        for parsed_animal in parsed_animal_list:
+            threading.Thread(target=ask_wikipedia,
+                             args=(lock, numeric_animal, parsed_animal, index, parsed_animal_list)).start()
+            index += 1
