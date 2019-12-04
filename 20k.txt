@@ -3269,6 +3269,7 @@ pub
 portion
 scope
 hampshire
+hamster
 supplier
 cables
 cotton
