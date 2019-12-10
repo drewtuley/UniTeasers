@@ -14,7 +14,7 @@ from itertools import permutations, combinations
 
 letters = 'stfnecai'
 with open('20k.txt') as words_fd:
-    found_words = {}
+    found_words = set()
     word_list = set(filter(lambda word: (len(word) >= 3), [x.strip() for x in words_fd]))
     for word_len in range(2, 9):
         for word1 in combinations(letters, word_len):
@@ -23,6 +23,6 @@ with open('20k.txt') as words_fd:
             for word2 in permutations(new_word):
                 word = ''.join(word2)
                 if word in word_list:
-                    found_words[word] = 1
+                    found_words.add(word)
     for word in found_words:
         print(word)
