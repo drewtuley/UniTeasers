@@ -1,6 +1,5 @@
 from itertools import permutations
 
-
 # A to Z
 # Complete these 'common words' by using all of the letters A to Z, each exactly once.
 common_words = [
@@ -50,13 +49,14 @@ def remove_letters(letters_to_remove):
 
 if __name__ == '__main__':
     with open('20k.txt') as fd:
-        dictionary = set(filter(lambda wd: (len(wd) >= 3 and wd not in ['youse', 'wat', 'wav', 'max']), [x.strip() for x in fd]))
+        dictionary = set(
+            filter(lambda wd: (len(wd) >= 3 and wd not in ['youse', 'wat', 'wav', 'max']), [x.strip() for x in fd]))
 
         winning_words = {}
         matched = {}
         for word in common_words:
             # for each word in the 'common word' list replace the wildcards
-            # with all possible permutations from the reamining letters in the letter pool
+            # with all possible permutations from the remaining letters in the letter pool
             wildcards = count_wildcards(word)
             list_of_replacements = []
             for seq in permutations(letters, wildcards):
@@ -108,9 +108,7 @@ if __name__ == '__main__':
                         optional_list[matched_wildcard] = new_word[0]
                         idx += wildcards
                         break
-                if new_word is not None:
-                    next
-                else:
+                if new_word is None:
                     break
             if len(optional_list) == len(matched):
                 print('Multiple: #{}'.format(multiple))
