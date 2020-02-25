@@ -15314,6 +15314,7 @@ sediment
 snub
 mandarin
 preaches
+preach
 thistle
 completes
 mongrel
@@ -15340,6 +15341,7 @@ adherent
 chubby
 dislodge
 espouse
+poach
 itinerant
 planetary
 sorrel
@@ -15352,6 +15354,7 @@ accrue
 adobe
 flagship
 savor
+savour
 welled
 confessional
 criticize
