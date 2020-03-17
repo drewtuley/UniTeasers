@@ -19314,6 +19314,8 @@ obituary
 pestle
 pickpocket
 pigtail
+pig
+pigs
 python
 ravenously
 uncritical
