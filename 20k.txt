@@ -12767,6 +12767,7 @@ nee
 reddy
 havana
 plastered
+plaster
 spar
 falcon
 parole
@@ -15586,6 +15587,7 @@ alienate
 cramp
 malign
 pinkerton
+pinball
 salve
 stenographer
 motherless
@@ -15752,6 +15754,7 @@ pomegranate
 pounce
 torrid
 pant
+pancake
 placard
 erotic
 concussion
