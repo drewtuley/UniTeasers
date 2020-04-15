@@ -17,15 +17,8 @@ def cyclic_grid(pos):
             yield pos[0] + dx, pos[1] + dy
 
 
-def get_letter_from_matrix(matrix, pos):
-    return matrix[pos[1]][pos[0]]
-
-
 def get_word_from_path(matrix, path):
-    word = []
-    for pos in path:
-        word.append(get_letter_from_matrix(matrix, pos))
-    return ''.join(word)
+    return ''.join([matrix[pos[1]][pos[0]] for pos in path])
 
 
 if __name__ == '__main__':
