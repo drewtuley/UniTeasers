@@ -30,5 +30,5 @@ if __name__ == '__main__':
     game_results = [game for game in permutations('KSJR', 4)]
 
     for game1, game2 in permutations(game_results, 2):
-        if rule1(game1, game2) and rule2(game1, game2) and rule3(game1, game2) and rule4(game1, game2):
+        if all(func(game1, game2) for func in [rule1, rule2, rule3, rule4]):
             print(game1, game2)
