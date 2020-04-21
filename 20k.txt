@@ -12512,6 +12512,7 @@ undergrowth
 easterly
 skirted
 'neath
+neat
 consecutive
 rectitude
 verona
@@ -14381,6 +14382,7 @@ perfunctory
 wat
 gar
 sodium
+soda
 urchin
 gretchen
 pollux
@@ -19011,6 +19013,7 @@ unpropitious
 woodcock
 zodiac
 bakery
+bake
 clairvoyant
 ep
 heirloom
