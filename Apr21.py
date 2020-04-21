@@ -14,20 +14,15 @@ def find_viable_options(word, dictionary):
 if __name__ == '__main__':
     with open('words_alpha.txt') as fd:
         wordlist = ['bake', 'cure', 'maze', 'pest', 'neat', 'rope', 'port', 'food', 'poke', 'soda']
+        # filter out a set of 10 and 4 letter words
         dictionary = set(
             filter(lambda wd: (len(wd) == 4 or len(wd) == 10), [x.strip() for x in fd]))
 
-        word_options = list()
-        for word in wordlist:
-            options = find_viable_options(word, dictionary)
-            word_options.append(options)
+        # find all the viable 3rd letter options for each seed word
+        word_options = list(find_viable_options(word, dictionary) for word in wordlist)
 
-        ten_letters = list(filter(lambda wd: (len(wd) == 10), [wd for wd in dictionary]))
-        for ten_letter in ten_letters:
-            match = True
-            for idx in range(0, 9):
-                if ten_letter[idx] not in word_options[idx]:
-                    match = False
-                    break
-            if match:
-                print(ten_letter)
+        ten_letter_words = list(filter(lambda wd: (len(wd) == 10), [wd for wd in dictionary]))
+        for ten_letter_word in ten_letter_words:
+            # for each ten letter word, check each letter for a match in the viable 3rd letter list
+            if all(ten_letter_word[idx] in word_options[idx] for idx in range(0, 9)):
+                print(ten_letter_word)
