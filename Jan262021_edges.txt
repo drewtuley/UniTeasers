@@ -1,0 +1,38 @@
+# list of 'edges' for the Jan 26 2021 Teaser
+# each edge is formed from a comma separated pair of vertices
+# Duplicate vertices are differentiated by a numeric suffix
+s,b
+n,o
+i,e3
+i,s2
+s2,b
+l,e3
+n,s2
+e,r
+n,s
+h,o
+i,r
+o2,s
+b,s3
+i2,y
+i,e2
+e2,r
+s,s3
+n,o2
+b,y
+e3,w
+p,o2
+s3,i2
+b,l
+e2,w
+b,i2
+l,w
+n,p
+o,p
+w,a
+y,a
+h,e
+y,w
+h,i
+t,h
+h,n
